@@ -1,0 +1,47 @@
+#!/bin/sh
+# Output vocabulary terms due for review based on spaced repetition
+
+set -e
+
+if [ $# -ne 1 ]; then
+    echo "Usage: get_due <language>" >&2
+    exit 1
+fi
+
+lang="$1"
+script_dir="$(dirname "$0")"
+seed_file="$script_dir/../data/$lang.json"
+progress_dir="$HOME/.polyglot/progress"
+progress_file="$progress_dir/$lang.json"
+now=$(date +%s)
+
+mkdir -p "$progress_dir"
+
+# Load or merge seed vocabulary
+if [ ! -f "$progress_file" ]; then
+    if [ -f "$seed_file" ]; then
+        cp "$seed_file" "$progress_file"
+    else
+        echo '{}' > "$progress_file"
+    fi
+fi
+
+# Spaced repetition intervals (seconds): mastery level -> interval
+# Level 1: 1 hour, 2: 6 hours, 3: 1 day, 4: 3 days, 5: 7 days
+jq --arg now "$now" '
+    to_entries |
+    map(
+        .value.interval = (
+            if .value.mastery == 5 then 604800
+            elif .value.mastery == 4 then 259200
+            elif .value.mastery == 3 then 86400
+            elif .value.mastery == 2 then 21600
+            else 3600
+            end
+        ) |
+        .value.due = (($now | tonumber) - .value.last_seen > .value.interval) |
+        select(.value.due == true) |
+        .key
+    ) |
+    .[:10]
+' "$progress_file" | jq -r '.[]'
