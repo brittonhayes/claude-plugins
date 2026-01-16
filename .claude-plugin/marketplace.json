@@ -1,13 +1,12 @@
 {
-  "name": "brittonhayes-plugins",
+  "name": "brittonhayes-claude-plugins",
   "owner": {
     "name": "Britton Hayes",
     "email": "britton@brittonhayes.com"
   },
   "metadata": {
     "description": "Collection of Claude Code plugins by Britton Hayes",
-    "version": "1.0.0",
-    "pluginRoot": "./plugins"
+    "version": "1.0.0"
   },
   "plugins": [
     {

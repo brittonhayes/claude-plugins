@@ -34,7 +34,7 @@ The urgency is fake but the learning is real.
 /plugin marketplace add brittonhayes/claude-plugins
 
 # Install the plugin
-/plugin install context-compactor@brittonhayes-plugins
+/plugin install context-compactor@brittonhayes-claude-plugins
 ```
 
 ## How It Works

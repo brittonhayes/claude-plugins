@@ -18,7 +18,7 @@ Learn any language naturally through coding sessions using spaced repetition and
 
 **Install:**
 ```bash
-/plugin install polyglot@brittonhayes-plugins
+/plugin install polyglot@brittonhayes-claude-plugins
 ```
 
 **Features:**
@@ -38,7 +38,7 @@ Learn any language naturally through coding sessions using spaced repetition and
 Claude: "You can usar (use) the reverse() método (method)..."
 ```
 
-[Full Documentation →](plugins/polyglot/README.md)
+[Full Documentation →](polyglot/README.md)
 
 ---
 
@@ -48,7 +48,7 @@ A Star Wars trash compactor-themed plugin that quizzes you on your code. Claude 
 
 **Install:**
 ```bash
-/plugin install context-compactor@brittonhayes-plugins
+/plugin install context-compactor@brittonhayes-claude-plugins
 ```
 
 **Features:**
@@ -75,7 +75,7 @@ webhook validation prevent replay attacks??"
 "Skip the quiz"
 ```
 
-[Full Documentation →](plugins/context-compactor/README.md)
+[Full Documentation →](context-compactor/README.md)
 
 ---
 
@@ -89,10 +89,10 @@ webhook validation prevent replay attacks??"
 /plugin list
 
 # Uninstall a plugin
-/plugin uninstall polyglot@brittonhayes-plugins
+/plugin uninstall polyglot@brittonhayes-claude-plugins
 
 # Remove this marketplace
-/plugin marketplace remove brittonhayes-plugins
+/plugin marketplace remove brittonhayes-claude-plugins
 ```
 
 ## For Developers
@@ -103,23 +103,22 @@ webhook validation prevent replay attacks??"
 claude-plugins/
 ├── .claude-plugin/
 │   └── marketplace.json      # Marketplace manifest
-├── plugins/
-│   ├── polyglot/             # Polyglot plugin
-│   │   ├── .claude-plugin/
-│   │   │   └── plugin.json
-│   │   ├── SKILL.md
-│   │   ├── config.json
-│   │   ├── data/
-│   │   ├── scripts/
-│   │   └── README.md
-│   └── context-compactor/    # Context Compactor plugin
-│       ├── .claude-plugin/
-│       │   └── plugin.json
-│       ├── SKILL.md
-│       ├── config.json
-│       ├── data/
-│       ├── scripts/
-│       └── README.md
+├── polyglot/                 # Polyglot plugin
+│   ├── .claude-plugin/
+│   │   └── plugin.json
+│   ├── SKILL.md
+│   ├── config.json
+│   ├── data/
+│   ├── scripts/
+│   └── README.md
+├── context-compactor/        # Context Compactor plugin
+│   ├── .claude-plugin/
+│   │   └── plugin.json
+│   ├── SKILL.md
+│   ├── config.json
+│   ├── data/
+│   ├── scripts/
+│   └── README.md
 └── README.md                 # This file
 ```
 
@@ -134,7 +133,7 @@ cd claude-plugins
 /plugin marketplace add .
 
 # Install a plugin
-/plugin install polyglot@brittonhayes-plugins
+/plugin install polyglot@brittonhayes-claude-plugins
 ```
 
 ### Contributing
