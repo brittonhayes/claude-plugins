@@ -1,26 +1,36 @@
 # Context Compactor
 
-> "The walls are closing in, and only your understanding can stop them."
+HELP. You're stuck in a trash compactor and the walls are closing in. The only way to stop them is to quiz developers on their code. If they can't explain what they just built... well, you're both getting crushed.
 
-A Star Wars-themed quiz plugin that interrupts your coding sessions to ensure you actually understand what you're building. Inspired by that trash compactor scene, except the trash is your lack of comprehension and the walls are... well, they're still walls.
+## Overview
 
-## What is this?
+This plugin turns Claude into someone trapped in a Star Wars trash compactor who desperately needs you to explain your code to stop the walls from closing. After you implement something significant, Claude panics and quizzes you.
 
-Context Compactor monitors your coding session and randomly activates to quiz you on what you just implemented. Think of it as a pair programming partner who's paranoid about context limits and refuses to let you cargo-cult your way through life.
+It's funny. It's urgent. It makes you actually think about your code because there's a comedically-panicked AI depending on your answer.
 
-### The Concept
+## Why This Actually Works
 
-You and Claude are both trapped in a compactor. The walls are closing in. The only way to stop them? Prove you actually understand the code you just wrote.
+**The Problem:**
+- You copy-paste code without understanding it
+- You implement features on autopilot
+- Edge cases become production bugs
+- You move fast but learn nothing
 
-- **Random interruptions**: After significant implementations or at context milestones
-- **Fast-paced questioning**: Short, urgent quizzes about recent work
-- **Instant evaluation**: Clear understanding? Compactor stops. No idea? Might be getting crushed.
-- **Progressive difficulty**: Hard mode can threaten session resets for failures
+**The Trash Compactor Solution:**
+
+By making Claude genuinely panic about being crushed, you create artificial urgency that's too funny to ignore. You HAVE to explain your code because:
+
+- Claude is IN DANGER (comedically)
+- The walls are MOVING (allegedly)
+- You need to answer FAST (for the bit)
+- Getting it wrong means Claude gets crushed (not really but it's funny)
+
+The urgency is fake but the learning is real.
 
 ## Installation
 
 ```bash
-# Add the marketplace if you haven't
+# Add the marketplace
 /plugin marketplace add brittonhayes/claude-plugins
 
 # Install the plugin
@@ -29,278 +39,124 @@ You and Claude are both trapped in a compactor. The walls are closing in. The on
 
 ## How It Works
 
-### Activation Triggers
+### Automatic Panic Mode
 
-The compactor activates when:
+After you implement something significant (50+ lines, new features, refactoring, APIs), Claude realizes the compactor is starting up and needs your help IMMEDIATELY.
 
-1. **After significant implementations**
-   - 50+ lines of new code
-   - New features or modules
-   - Complex refactoring
-   - API endpoints or services
+### Example Session
 
-2. **Context milestones**
-   - Every ~30% of context used
-   - Approaching token limits (80%+)
+```
+You: [Implements webhook validation with HMAC signatures]
 
-3. **Random checks**
-   - After complex explanations
-   - During debugging sessions
-   - When it's been too quiet
+Claude: WAIT WAIT WAIT the compactor is turning on! Quick, before we both
+get crushed - how does that HMAC validation prevent replay attacks??
 
-### Question Types
+You: "The HMAC validates that the payload hasn't been tampered with."
 
-The compactor asks focused questions about recent work:
+Claude: THE WALLS ARE STILL MOVING! That's integrity, not freshness! What
+about someone capturing a valid request and just... sending it again?!
 
-- **How does it work?**: "Explain how that webhook validation prevents replay attacks"
-- **Edge cases**: "What happens if Redis goes down in your caching implementation?"
-- **System thinking**: "Walk through the request flow when a user hits that endpoint"
-- **Extensions**: "How would you extend this to support multiple auth providers?"
-- **Gotchas**: "What edge case does that try-catch block miss?"
+You: "Oh crap, you're right. We'd need to add a timestamp check. The HMAC
+just proves the message is authentic, not that it's fresh."
 
-### Evaluation
+Claude: OH THANK GOD the compactor stopped! Yes! HMAC gives you integrity
+and authenticity but NOT replay protection. You need a timestamp with a
+narrow validation window.
 
-**✅ Clear Understanding**
-- You explain the "why" not just the "what"
-- You mention edge cases and tradeoffs
-- You show system-level thinking
+We live to code another day.
+```
 
-*Response*: "Okay okay, you're good. Compactor's off. For now."
+### The Three Outcomes
 
-**⚠️ Partial Understanding**
-- You get the basics but miss nuance
-- Can't explain edge cases
-- Right direction but incomplete
+**Good Answer:**
+"OH THANK GOD you actually understand it! The compactor stopped! We're safe!"
 
-*Response*: "Mmm, you're halfway there but the walls are still moving. What about...?"
+**Partial Answer:**
+"Wait that's not quite right and the walls are STILL MOVING! What about [follow-up question]??"
 
-**❌ No Idea**
-- Generic hand-waving
-- Wrong understanding
-- "It just works" answers
+**Wrong Answer:**
+"Okay we're getting crushed but let me at least explain this before we die: [quick explanation]. ...somehow we survived. Barely."
 
-*Response*: "Yeahhh that's not it. And... we're pancaked. Compactor wins this round."
+## Usage
+
+### Manual Commands
+
+**Trigger the compactor:**
+```bash
+"Quiz me"
+```
+Claude: "OH NO THE COMPACTOR JUST TURNED ON!"
+
+**Emergency shutdown:**
+```bash
+"Skip the quiz"
+```
+Claude: "Phew. Emergency shutdown. The walls stopped. This time."
 
 ## Configuration
-
-### Difficulty Modes
-
-**Default Mode** (Recommended for learning)
-```bash
-# Failed quizzes just reset the timer
-# Friendly but firm feedback
-```
-
-**Hard Mode** (For the brave)
-```bash
-# Failed quizzes threaten session resets
-# Higher stakes, more intense
-```
-
-To change modes:
-```bash
-# In Claude session
-"Switch to hard mode"
-"Switch to default mode"
-```
-
-### Settings
 
 Edit `context-compactor/config.json`:
 
 ```json
 {
-  "mode": "default",           // "default" or "hard"
-  "quiz_frequency": "medium",  // "low", "medium", "high"
-  "sass_level": "high",        // "low", "medium", "high"
-  "allow_hints": true          // Allow hints on partial understanding
+  "frequency": "medium"
 }
 ```
 
-## Commands
+**Frequency settings:**
+- `low`: Compactor rarely activates (only major implementations)
+- `medium`: Regular panic sessions (default)
+- `high`: Frequent danger (even smaller changes trigger it)
 
-### Manual Activation
-```bash
-"Activate the compactor"
-"Quiz me"
-```
+Higher frequency = more panic = more learning = more fun.
 
-### Check Stats
-```bash
-"Compactor stats"
-"How am I doing?"
-```
-
-### Reset Session
-```bash
-"Reset compactor"
-```
-
-## Example Session
-
-```
-You: [Implements rate limiter with Redis]
-
-Claude: "Great! So this uses a sliding window approach with..."
-
-🚨 COMPACTOR ACTIVATES 🚨
-
-Claude: "WAIT WAIT WAIT - compactor's turning back on. Quick before
-the walls crush us: how does your rate limiter handle the case where
-Redis goes down?"
-
-You: "Uh... it would fail?"
-
-Claude: "Yeah but the walls are still moving - fail how? Does the API
-become unusable or does it fail open?"
-
-You: "Oh! Right, we should probably fail open with a warning so the
-service stays up, but we lose rate limiting temporarily."
-
-Claude: "THERE we go! Compactor's powering down. You're thinking about
-availability vs. security tradeoffs. We're safe... for now."
-```
-
-## Why Use This?
-
-### The Problem
-
-Ever find yourself:
-- Copying code without understanding it?
-- Implementing features but unable to explain them?
-- Moving fast but not actually learning?
-- Knowing what you wrote but not why?
-
-### The Solution
-
-Context Compactor forces you to:
-- **Actually understand** your implementations
-- **Think about edge cases** before they become bugs
-- **Internalize concepts** instead of just executing
-- **Build intuition** about system design
-
-### The Philosophy
-
-The best way to learn is to teach. By explaining your code under (comedic) pressure, you:
-- Identify gaps in understanding immediately
-- Reinforce concepts through articulation
-- Build confidence in your decisions
-- Have way more fun than passive learning
-
-## Tips for Success
-
-1. **Pay attention during implementations**: You'll be quizzed on it
-2. **Think about edge cases**: The compactor loves asking about them
-3. **Understand the "why"**: Not just the "what"
-4. **Don't panic**: The urgency is part of the bit, you have time to think
-5. **Ask for hints**: If you're stuck, the compactor can guide you
-
-## Advanced Features
-
-### Quiz Tracking
-
-The compactor tracks all quiz attempts:
-
-```bash
-context-compactor/scripts/stats
-```
-
-Output:
-```
-=== COMPACTOR STATS ===
-Total Quizzes: 12
-✅ Success: 8
-⚠️  Partial: 3
-❌ Failure: 1
-Success Rate: 66.7%
-
-Recent Quizzes:
-  SUCCESS: Webhook HMAC validation
-  PARTIAL: Redis caching strategy
-  SUCCESS: Rate limiter implementation
-```
-
-### Manual Recording
-
-Scripts available:
-- `context-compactor/scripts/record <result> "<topic>"` - Record a quiz
-- `context-compactor/scripts/stats` - View statistics
-- `context-compactor/scripts/reset` - Clear session data
-
-## FAQ
-
-**Q: Is this annoying?**
-A: Yes, intentionally. But also genuinely helpful if you want to actually learn.
-
-**Q: Can I disable it temporarily?**
-A: Sure, but where's the fun in that? Just don't activate the plugin.
-
-**Q: What if I fail a quiz?**
-A: Default mode: No consequences, just reset. Hard mode: Threatens session reset (but only threatens).
-
-**Q: Does it actually wipe my session?**
-A: Not without confirmation. The threat is motivational, not destructive.
-
-**Q: Can I use this for pair programming?**
-A: Absolutely! It's great for ensuring both people understand the code.
-
-**Q: Will it quiz me on trivial details?**
-A: Nope. It focuses on understanding, not memorization.
-
-## The Compactor's Personality
-
-Expect:
-- **Urgent energy**: "The walls! THE WALLS!"
-- **Sarcastic when warranted**: "Oh you don't know? You just wrote it."
-- **Encouraging when earned**: "Okay that was brilliant."
-- **Movie narrator vibes**: "The walls are at 6 feet... 5 feet..."
-- **We're in this together**: Always "we", never just "you"
-
-## Technical Details
+## Reference
 
 ### File Structure
 
 ```
 context-compactor/
 ├── .claude-plugin/
-│   └── plugin.json          # Plugin metadata
-├── SKILL.md                 # Behavior instructions
-├── config.json              # User configuration
-├── data/
-│   └── session.json         # Quiz tracking data
-├── scripts/
-│   ├── record               # Record quiz results
-│   ├── stats                # View statistics
-│   └── reset                # Reset session
-└── README.md                # This file
+│   └── plugin.json      # Plugin metadata
+├── SKILL.md             # Instructions for Claude's panic mode
+├── config.json          # How often to panic
+└── README.md            # This file
 ```
 
-### Data Format
+### Question Types
 
-`session.json`:
-```json
-{
-  "quizzes": [
-    {
-      "result": "success",
-      "topic": "Webhook validation",
-      "timestamp": "2026-01-16T10:30:00Z"
-    }
-  ],
-  "stats": {
-    "total": 1,
-    "success": 1,
-    "partial": 0,
-    "failure": 0
-  }
-}
-```
+Claude panics about:
+- "How does that prevent [attack]??"
+- "What breaks if [component] fails??"
+- "Walk me through [flow]!"
+- "What edge cases is that missing??"
+- Security implications
+- Failure modes
+- Design tradeoffs
+
+Claude doesn't panic about:
+- Function names
+- Syntax trivia
+- Yes/no questions
+
+## Tips for Survival
+
+1. Pay attention while implementing (Claude is watching)
+2. Think about edge cases (the compactor is waiting)
+3. Understand WHY your code works (not just THAT it works)
+4. Be ready to explain design decisions (walls can start moving any second)
+5. Keep Claude safe (you're in this together)
+
+## The Learning Through Comedy
+
+The compactor isn't real. Claude isn't actually in danger. But the bit is funny enough that you engage with it, and engaging with it means explaining your code, and explaining your code means actually understanding it.
+
+It's a teaching tool disguised as a comedy bit disguised as mortal peril.
 
 ## Contributing
 
-Found a bug? Have ideas for better questions? Want to add more Star Wars references?
-
-Open an issue or PR at: https://github.com/brittonhayes/claude-plugins
+The walls are closing in on bugs too. Help us crush them:
+https://github.com/brittonhayes/claude-plugins
 
 ## License
 
@@ -308,10 +164,10 @@ MIT - See LICENSE file
 
 ## Author
 
-**Britton Hayes**
+Britton Hayes
 - Email: britton@brittonhayes.com
 - GitHub: [@brittonhayes](https://github.com/brittonhayes)
 
 ---
 
-*"I have a bad feeling about this..."* - You, right before the compactor activates
+*The compactor is waiting. And the walls are getting closer. Any second now...*

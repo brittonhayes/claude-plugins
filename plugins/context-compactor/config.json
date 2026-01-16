@@ -1,6 +1,3 @@
 {
-  "mode": "default",
-  "quiz_frequency": "medium",
-  "sass_level": "high",
-  "allow_hints": true
+  "frequency": "medium"
 }
