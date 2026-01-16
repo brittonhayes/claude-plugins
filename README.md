@@ -38,7 +38,7 @@ Learn any language naturally through coding sessions using spaced repetition and
 Claude: "You can usar (use) the reverse() método (method)..."
 ```
 
-[Full Documentation →](plugins/polyglot/README.md)
+[Full Documentation →](polyglot/README.md)
 
 ---
 
@@ -75,7 +75,7 @@ webhook validation prevent replay attacks??"
 "Skip the quiz"
 ```
 
-[Full Documentation →](plugins/context-compactor/README.md)
+[Full Documentation →](context-compactor/README.md)
 
 ---
 
@@ -103,23 +103,22 @@ webhook validation prevent replay attacks??"
 claude-plugins/
 ├── .claude-plugin/
 │   └── marketplace.json      # Marketplace manifest
-├── plugins/
-│   ├── polyglot/             # Polyglot plugin
-│   │   ├── .claude-plugin/
-│   │   │   └── plugin.json
-│   │   ├── SKILL.md
-│   │   ├── config.json
-│   │   ├── data/
-│   │   ├── scripts/
-│   │   └── README.md
-│   └── context-compactor/    # Context Compactor plugin
-│       ├── .claude-plugin/
-│       │   └── plugin.json
-│       ├── SKILL.md
-│       ├── config.json
-│       ├── data/
-│       ├── scripts/
-│       └── README.md
+├── polyglot/                 # Polyglot plugin
+│   ├── .claude-plugin/
+│   │   └── plugin.json
+│   ├── SKILL.md
+│   ├── config.json
+│   ├── data/
+│   ├── scripts/
+│   └── README.md
+├── context-compactor/        # Context Compactor plugin
+│   ├── .claude-plugin/
+│   │   └── plugin.json
+│   ├── SKILL.md
+│   ├── config.json
+│   ├── data/
+│   ├── scripts/
+│   └── README.md
 └── README.md                 # This file
 ```
 

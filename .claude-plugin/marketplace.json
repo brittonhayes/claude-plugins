@@ -6,8 +6,7 @@
   },
   "metadata": {
     "description": "Collection of Claude Code plugins by Britton Hayes",
-    "version": "1.0.0",
-    "pluginRoot": "./plugins"
+    "version": "1.0.0"
   },
   "plugins": [
     {
