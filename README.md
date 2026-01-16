@@ -4,33 +4,63 @@ A Claude Code plugin that progressively teaches you any language through natural
 
 ## Installation
 
-### Option 1: Install from GitHub (Recommended)
+### From GitHub (Recommended)
 
-Clone this repository to your Claude Code plugins directory:
+In Claude Code, add the marketplace and install the plugin:
+
+```bash
+# Add the marketplace
+/plugin marketplace add brittonhayes/claude-plugin-polyglot
+
+# Install the polyglot plugin
+/plugin install polyglot@polyglot-language-learning
+```
+
+### From Local Development
+
+If you're developing or testing locally:
 
 ```bash
 # Clone the repository
 git clone https://github.com/brittonhayes/claude-plugin-polyglot.git
+cd claude-plugin-polyglot
 
-# The plugin will be automatically detected by Claude Code
+# Add as local marketplace
+/plugin marketplace add .
+
+# Install the plugin
+/plugin install polyglot@polyglot-language-learning
 ```
-
-### Option 2: Manual Installation
-
-1. Download or clone this repository
-2. Claude Code will automatically detect the plugin via the `.claude-plugin/marketplace.json` manifest
-3. The plugin activates automatically during your coding sessions
 
 ### Initial Configuration
 
 After installation, configure your target language and difficulty level:
 
 ```bash
-# Navigate to the plugin directory
-cd claude-plugin-polyglot/polyglot
-
 # Set your target language and difficulty (1-10)
+# The config file is in your plugin cache directory
 echo '{"language": "ru", "difficulty": 3}' > config.json
+```
+
+Or simply tell Claude during a session:
+```
+"Switch to Spanish and set difficulty to 5"
+```
+
+### Managing the Plugin
+
+```bash
+# Update the marketplace to get latest version
+/plugin marketplace update
+
+# List installed plugins
+/plugin list
+
+# Uninstall the plugin
+/plugin uninstall polyglot@polyglot-language-learning
+
+# Remove the marketplace
+/plugin marketplace remove polyglot-language-learning
 ```
 
 ## Quick Start
@@ -89,22 +119,25 @@ echo '{"language": "ru", "difficulty": 7}' > config.json
 
 ### Add Vocabulary
 
-Add domain-specific terms manually:
+Ask Claude to add domain-specific terms:
 
-```bash
-polyglot/scripts/add ru рекурсия recursion
-polyglot/scripts/add es recursión recursion
+```
+"Add the word 'database' to my Russian vocabulary"
+"Add 'recursion' in Spanish to my vocabulary"
 ```
 
-Or ask Claude: "Add the word 'database' to my Russian vocabulary"
+Claude will use the plugin's scripts to add these terms for you.
 
 ### Check Progress
 
-```bash
-polyglot/scripts/stats ru
+Ask Claude about your progress:
+
+```
+"How's my Russian progress?"
+"Show me my Spanish vocabulary stats"
 ```
 
-Output:
+Example output:
 ```
 Language: ru
 Total vocabulary: 120
@@ -367,22 +400,25 @@ Seed vocabulary included for:
 ```
 claude-plugin-polyglot/
 ├── .claude-plugin/
-│   └── marketplace.json    # Plugin manifest for Claude Code
+│   └── marketplace.json      # Marketplace manifest for Claude Code
 ├── polyglot/
-│   ├── SKILL.md           # Skill instructions for Claude
-│   ├── config.json        # User configuration (language, difficulty)
-│   ├── data/              # Seed vocabulary files
+│   ├── .claude-plugin/
+│   │   └── plugin.json       # Plugin manifest
+│   ├── SKILL.md              # Skill instructions for Claude
+│   ├── config.json           # User configuration (language, difficulty)
+│   ├── data/                 # Seed vocabulary files
 │   │   ├── ru.json
 │   │   ├── es.json
 │   │   ├── de.json
 │   │   ├── fr.json
 │   │   └── ja.json
-│   └── scripts/           # Unix-style utility scripts
-│       ├── get_due        # Fetch terms due for review
-│       ├── record         # Record vocabulary exposure
-│       ├── add            # Add new vocabulary
-│       └── stats          # Show progress statistics
-└── README.md              # This file
+│   └── scripts/              # Unix-style utility scripts
+│       ├── get_due           # Fetch terms due for review
+│       ├── record            # Record vocabulary exposure
+│       ├── add               # Add new vocabulary
+│       └── stats             # Show progress statistics
+├── LICENSE
+└── README.md                 # This file
 ```
 
 ## Philosophy
