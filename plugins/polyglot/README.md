@@ -1,25 +1,73 @@
 # Polyglot - Learn Languages Through Code
 
-A Claude Code skill that progressively teaches you any language through natural code interaction. No flashcards, no drills—just code and conversation.
+A Claude Code plugin that progressively teaches you any language through natural code interaction. No flashcards, no drills—just code and conversation.
 
-## Quickstart
+## Installation
 
-### Installation
+### From Marketplace (Recommended)
 
-1. Copy the `polyglot` directory to your Claude Code skills folder:
-   ```bash
-   cp -r polyglot ~/.claude/skills/
-   ```
+In Claude Code, add the marketplace and install the plugin:
 
-2. Set your target language and difficulty:
-   ```bash
-   cd ~/.claude/skills/polyglot
-   echo '{"language": "ru", "difficulty": 3}' > config.json
-   ```
+```bash
+# Add the marketplace
+/plugin marketplace add brittonhayes/claude-plugins
 
-3. Start coding with Claude Code. The skill activates automatically and begins injecting vocabulary.
+# Install the polyglot plugin
+/plugin install polyglot@claude-plugins
+```
+
+### From Local Development
+
+If you're developing or testing locally:
+
+```bash
+# Clone the repository
+git clone https://github.com/brittonhayes/claude-plugins.git
+cd claude-plugins
+
+# Add as local marketplace
+/plugin marketplace add .
+
+# Install the plugin
+/plugin install polyglot@claude-plugins
+```
+
+### Initial Configuration
+
+After installation, configure your target language and difficulty level:
+
+```bash
+# Set your target language and difficulty (1-10)
+# The config file is in your plugin cache directory
+echo '{"language": "ru", "difficulty": 3}' > config.json
+```
+
+Or simply tell Claude during a session:
+```
+"Switch to Spanish and set difficulty to 5"
+```
+
+### Managing the Plugin
+
+```bash
+# Update the marketplace to get latest version
+/plugin marketplace update
+
+# List installed plugins
+/plugin list
+
+# Uninstall the plugin
+/plugin uninstall polyglot@claude-plugins
+
+# Remove the marketplace
+/plugin marketplace remove claude-plugins
+```
+
+## Quick Start
 
 ### Your First Session
+
+Once configured, start coding with Claude Code. The skill activates automatically and begins injecting vocabulary:
 
 ```
 You: How do I reverse an array in JavaScript?
@@ -41,7 +89,7 @@ That's it. As you code, you learn. The system tracks every word and surfaces the
 
 ### Change Language
 
-Edit `config.json` or tell Claude:
+Edit `polyglot/config.json` or tell Claude:
 
 ```
 "Switch to Spanish"
@@ -56,6 +104,7 @@ Set difficulty from 1 (beginner) to 10 (advanced):
 
 ```bash
 # Via config
+cd polyglot
 echo '{"language": "ru", "difficulty": 7}' > config.json
 
 # Or tell Claude
@@ -70,22 +119,25 @@ echo '{"language": "ru", "difficulty": 7}' > config.json
 
 ### Add Vocabulary
 
-Add domain-specific terms manually:
+Ask Claude to add domain-specific terms:
 
-```bash
-polyglot/scripts/add ru рекурсия recursion
-polyglot/scripts/add es recursión recursion
+```
+"Add the word 'database' to my Russian vocabulary"
+"Add 'recursion' in Spanish to my vocabulary"
 ```
 
-Or ask Claude: "Add the word 'database' to my Russian vocabulary"
+Claude will use the plugin's scripts to add these terms for you.
 
 ### Check Progress
 
-```bash
-polyglot/scripts/stats ru
+Ask Claude about your progress:
+
+```
+"How's my Russian progress?"
+"Show me my Spanish vocabulary stats"
 ```
 
-Output:
+Example output:
 ```
 Language: ru
 Total vocabulary: 120
@@ -110,95 +162,6 @@ rm ~/.polyglot/progress/ru.json
 ```
 
 Next session will reload from seed vocabulary.
-
-## Scripts
-
-All scripts follow Unix philosophy: single purpose, text streams, composability.
-
-### `record`
-
-Increment exposure count for vocabulary terms.
-
-**Usage**: `record <language> <term> [term2] [term3] ...`
-
-**Input**: Language code and one or more terms
-
-**Output**: Silent on success (updates `~/.polyglot/progress/<lang>.json`)
-
-**Example**:
-```bash
-polyglot/scripts/record ru функция переменная
-```
-
-**How it works**:
-- Loads progress file (creates if missing)
-- For each term: increments count, updates timestamp, recalculates mastery
-- Mastery levels: count 1 → mastery 1, count 2+ → mastery 2, count 5+ → mastery 3, count 10+ → mastery 4, count 20+ → mastery 5
-
-### `get_due`
-
-Output vocabulary terms due for spaced repetition review.
-
-**Usage**: `get_due <language>`
-
-**Input**: Language code
-
-**Output**: List of terms (one per line), max 10
-
-**Example**:
-```bash
-polyglot/scripts/get_due ru
-# Output:
-# функция
-# переменная
-# цикл
-```
-
-**How it works**:
-- Calculates due status based on mastery level and time since last exposure
-- Intervals: mastery 1 → 1 hour, mastery 2 → 6 hours, mastery 3 → 1 day, mastery 4 → 3 days, mastery 5 → 7 days
-- Returns up to 10 due terms sorted by priority
-- On first run, loads seed vocabulary from `data/<lang>.json`
-
-### `add`
-
-Add a new vocabulary term.
-
-**Usage**: `add <language> <term> <translation>`
-
-**Input**: Language code, target language term, English translation
-
-**Output**: Confirmation message
-
-**Example**:
-```bash
-polyglot/scripts/add ru база\ данных database
-# Output: Added: база данных = database
-```
-
-**How it works**:
-- Creates new entry with count 0, mastery 0
-- Will appear in `get_due` output immediately (due after 0 seconds)
-
-### `stats`
-
-Show learning progress statistics.
-
-**Usage**: `stats <language>`
-
-**Input**: Language code
-
-**Output**: Summary statistics and top 10 reviewed terms
-
-**Example**:
-```bash
-polyglot/scripts/stats es
-```
-
-**How it works**:
-- Aggregates progress data using jq
-- Counts terms by mastery level
-- Sorts by exposure count for "top reviewed" list
 
 ## How It Works
 
@@ -264,16 +227,98 @@ The difficulty system gradually shifts the cognitive load:
 
 As you advance, Claude reduces scaffolding, forcing your brain to work harder—and learn deeper.
 
+## Scripts
+
+All scripts follow Unix philosophy: single purpose, text streams, composability.
+
+### `record`
+
+Increment exposure count for vocabulary terms.
+
+**Usage**: `record <language> <term> [term2] [term3] ...`
+
+**Input**: Language code and one or more terms
+
+**Output**: Silent on success (updates `~/.polyglot/progress/<lang>.json`)
+
+**Example**:
+```bash
+polyglot/scripts/record ru функция переменная
+```
+
+**How it works**:
+- Loads progress file (creates if missing)
+- For each term: increments count, updates timestamp, recalculates mastery
+- Mastery levels: count 1 → mastery 1, count 2+ → mastery 2, count 5+ → mastery 3, count 10+ → mastery 4, count 20+ → mastery 5
+
+### `get_due`
+
+Output vocabulary terms due for spaced repetition review.
+
+**Usage**: `get_due <language>`
+
+**Input**: Language code
+
+**Output**: List of terms (one per line), max 10
+
+**Example**:
+```bash
+polyglot/scripts/get_due ru
+# Output:
+# функция
+# переменная
+# цикл
+```
+
+**How it works**:
+- Calculates due status based on mastery level and time since last exposure
+- Intervals: mastery 1 → 1 hour, mastery 2 → 6 hours, mastery 3 → 1 day, mastery 4 → 3 days, mastery 5 → 7 days
+- Returns up to 10 due terms sorted by priority
+- On first run, loads seed vocabulary from `data/<lang>.json`
+
+### `add`
+
+Add a new vocabulary term.
+
+**Usage**: `add <language> <term> <translation>`
+
+**Input**: Language code, target language term, English translation
+
+**Output**: Confirmation message
+
+**Example**:
+```bash
+polyglot/scripts/add ru "база данных" database
+# Output: Added: база данных = database
+```
+
+**How it works**:
+- Creates new entry with count 0, mastery 0
+- Will appear in `get_due` output immediately (due after 0 seconds)
+
+### `stats`
+
+Show learning progress statistics.
+
+**Usage**: `stats <language>`
+
+**Input**: Language code
+
+**Output**: Summary statistics and top 10 reviewed terms
+
+**Example**:
+```bash
+polyglot/scripts/stats es
+```
+
+**How it works**:
+- Aggregates progress data using jq
+- Counts terms by mastery level
+- Sorts by exposure count for "top reviewed" list
+
 ### The Unix Philosophy
 
-Each script does exactly one thing:
-
-- `record`: Update exposure data
-- `get_due`: Calculate and output due terms
-- `add`: Insert new terms
-- `stats`: Aggregate and display progress
-
-They compose via shell pipelines:
+Each script does exactly one thing and they compose via shell pipelines:
 
 ```bash
 # Get due Russian terms that contain "функц"
@@ -290,8 +335,6 @@ polyglot/scripts/stats ru | grep "Total exposures"
 
 Small, sharp tools. Text streams. Composability. This is how software should work.
 
----
-
 ## Supported Languages
 
 Seed vocabulary included for:
@@ -304,7 +347,7 @@ Seed vocabulary included for:
 
 ### Adding New Languages
 
-1. Create `data/<language_code>.json` with this structure:
+1. Create `polyglot/data/<language_code>.json` with this structure:
 
 ```json
 {
@@ -323,6 +366,14 @@ Seed vocabulary included for:
 3. Focus on 100-200 programming terms first
 
 4. Use the new language: `{"language": "<code>", "difficulty": 3}`
+
+## Requirements
+
+- **Claude Code**: This plugin requires Claude Code to be installed
+- **jq**: JSON processing tool
+  - macOS: `brew install jq`
+  - Linux: `apt install jq` or `yum install jq`
+  - Windows: Download from https://stedolan.github.io/jq/
 
 ## Troubleshooting
 
@@ -344,12 +395,52 @@ Seed vocabulary included for:
 - Check terms are due: `polyglot/scripts/get_due <lang>`
 - Claude may skip injection if terms aren't contextually relevant
 
+## Plugin Structure
+
+```
+polyglot/
+├── .claude-plugin/
+│   └── plugin.json       # Plugin manifest
+├── SKILL.md              # Skill instructions for Claude
+├── config.json           # User configuration (language, difficulty)
+├── data/                 # Seed vocabulary files
+│   ├── ru.json
+│   ├── es.json
+│   ├── de.json
+│   ├── fr.json
+│   └── ja.json
+├── scripts/              # Unix-style utility scripts
+│   ├── get_due           # Fetch terms due for review
+│   ├── record            # Record vocabulary exposure
+│   ├── add               # Add new vocabulary
+│   └── stats             # Show progress statistics
+└── README.md             # This file
+```
+
+This plugin is part of the [claude-plugins](https://github.com/brittonhayes/claude-plugins) marketplace.
+
 ## Philosophy
 
 Language learning shouldn't feel like work. It should feel like a side effect of doing what you already love.
 
-This skill makes learning invisible. You code, you converse, you solve problems—and vocabulary seeps in through natural repetition in meaningful contexts.
+This plugin makes learning invisible. You code, you converse, you solve problems—and vocabulary seeps in through natural repetition in meaningful contexts.
 
 No apps. No streaks. No gamification. Just Unix tools and spaced repetition doing what they do best: composing into something greater than the sum of their parts.
+
+## License
+
+MIT License - see [LICENSE](LICENSE) for details
+
+## Author
+
+**Britton Hayes**
+- Email: britton@brittonhayes.com
+- GitHub: [@brittonhayes](https://github.com/brittonhayes)
+
+## Contributing
+
+Contributions welcome! Please feel free to submit a Pull Request.
+
+---
 
 Enjoy your polyglot journey.

@@ -1,13 +1,13 @@
 {
-  "name": "polyglot-language-learning",
+  "name": "claude-plugins",
   "owner": {
     "name": "Britton Hayes",
     "email": "britton@brittonhayes.com"
   },
   "metadata": {
-    "description": "Language learning through natural code interaction",
+    "description": "Collection of Claude Code plugins by Britton Hayes",
     "version": "1.0.0",
-    "pluginRoot": "."
+    "pluginRoot": "./plugins"
   },
   "plugins": [
     {
@@ -19,8 +19,8 @@
         "name": "Britton Hayes",
         "email": "britton@brittonhayes.com"
       },
-      "homepage": "https://github.com/brittonhayes/claude-plugin-polyglot",
-      "repository": "https://github.com/brittonhayes/claude-plugin-polyglot",
+      "homepage": "https://github.com/brittonhayes/claude-plugins",
+      "repository": "https://github.com/brittonhayes/claude-plugins",
       "license": "MIT",
       "keywords": [
         "language-learning",
