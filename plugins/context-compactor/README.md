@@ -1,25 +1,31 @@
 # Context Compactor
 
-A lightweight plugin that quizzes you on recently implemented code to ensure genuine understanding.
+A Star Wars-themed quiz plugin that threatens to crush your coding session like a trash compactor. Only your understanding of the code can stop the walls from closing in.
 
 ## Overview
 
-Context Compactor helps developers build deeper comprehension by periodically asking focused questions about code they just wrote. Instead of passively implementing features, you'll articulate your understanding of design decisions, edge cases, and system behavior.
+Inspired by the trash compactor scene in Star Wars Episode IV, this plugin creates urgency around understanding your own code. When you implement features without truly comprehending them, the walls begin to close. Answer correctly to stop the compactor and save your session.
 
-## Why Use This
+The compactor activates automatically after significant implementations, interrupting with focused questions about what you just built. Clear answers stop the walls. Weak answers slow them down. Wrong answers... well, the compactor keeps closing.
+
+## Why This Works
 
 **The Problem**
-- Implementing code without fully understanding it
-- Missing edge cases until they become bugs
-- Moving fast but not building intuition
-- Copying patterns without grasping the reasoning
+- Copy-pasting code without understanding it
+- Implementing features on autopilot
+- Missing edge cases until they become production bugs
+- Moving fast but building no intuition
 
-**The Solution**
-Context Compactor prompts you to explain your code shortly after writing it. This practice:
-- Surfaces gaps in understanding immediately
-- Reinforces concepts through articulation
-- Builds confidence in design decisions
-- Encourages thinking about edge cases
+**The Trash Compactor Solution**
+
+By creating artificial urgency through the compactor metaphor, you're forced to articulate your understanding immediately after implementation. The stakes feel real (even though they're not), which:
+
+- Makes you pay attention during implementation
+- Surfaces knowledge gaps before you move on
+- Reinforces learning through immediate recall
+- Turns passive coding into active comprehension
+
+The trash compactor isn't punishment - it's a teaching tool disguised as mortal danger.
 
 ## Installation
 
@@ -33,58 +39,67 @@ Context Compactor prompts you to explain your code shortly after writing it. Thi
 
 ## How It Works
 
-The plugin activates automatically after significant implementations:
+### Automatic Activation
+
+The compactor monitors your session and activates after:
 - 50+ lines of new code
 - New features or modules
 - Complex refactoring
 - API endpoints or services
+- Significant implementation work
 
-It asks one focused question about your recent work, such as:
-- "How does this validation prevent replay attacks?"
-- "What happens if the database connection fails during this transaction?"
-- "What edge cases does this error handling miss?"
+### The Compactor Sequence
 
-Based on your response:
-- **Clear understanding**: Continue working
-- **Partial understanding**: Follow-up question to clarify
-- **Unclear**: Brief explanation of what you missed
+**Stage 1: The walls begin to close**
+After you complete an implementation, the compactor activates. You'll be interrupted with a focused question.
 
-## Usage
+**Stage 2: Your response determines your fate**
+- Strong understanding: The walls stop. Session saved.
+- Partial understanding: The walls slow. One follow-up question.
+- No understanding: The walls continue. Brief explanation, then the session survives (barely).
 
-### Automatic Activation
-
-The plugin monitors your session and activates automatically after significant code changes.
-
-### Manual Activation
-
-Trigger a quiz anytime:
-```bash
-"Quiz me"
-```
-
-Skip a quiz if needed:
-```bash
-"Skip the quiz"
-```
+**Stage 3: Continue coding**
+Whether you stopped the compactor or just survived it, the session continues. But you've learned something.
 
 ### Example Session
 
 ```
 You: [Implements webhook validation with HMAC signatures]
 
-Claude: [After implementation completes]
-"Quick question: how does your HMAC validation prevent replay attacks?"
+Compactor: The walls begin to close...
+
+Quick question: how does your HMAC validation prevent replay attacks?
 
 You: "The HMAC validates that the payload hasn't been tampered with."
 
-Claude: "Right, but what about someone intercepting a valid request and
-sending it again?"
+Compactor: The walls continue closing. That's integrity, not freshness.
 
-You: "Oh, we'd need to add a timestamp check. The HMAC alone doesn't
-prevent replaying the same valid request."
+What about someone intercepting a valid request and sending it again?
 
-Claude: "Exactly. HMAC proves integrity and authenticity, but not freshness."
+You: "Oh. We'd need a timestamp check. The HMAC proves the message is valid,
+but doesn't prevent reusing it."
+
+Compactor: The walls stop. Correct. HMAC gives you integrity and authenticity,
+but not protection against replay. Add a timestamp check with a narrow window.
+
+You live to code another day.
 ```
+
+## Usage
+
+### Manual Commands
+
+**Trigger immediately:**
+```bash
+"Quiz me"
+```
+
+**Emergency override:**
+```bash
+"Skip the quiz"
+```
+
+The walls will stop... this time.
 
 ## Configuration
 
@@ -96,8 +111,12 @@ Edit `context-compactor/config.json`:
 }
 ```
 
-**Options:**
-- `frequency`: How often to quiz - "low", "medium", or "high"
+**Frequency settings:**
+- `low`: Compactor activates only after major implementations
+- `medium`: Regular activation after significant changes (default)
+- `high`: Frequent activation, even for smaller changes
+
+Higher frequency means more pressure, more learning, and more chances to stop the walls.
 
 ## Reference
 
@@ -107,27 +126,38 @@ Edit `context-compactor/config.json`:
 context-compactor/
 ├── .claude-plugin/
 │   └── plugin.json      # Plugin metadata
-├── SKILL.md             # Behavior instructions
-├── config.json          # Configuration
+├── SKILL.md             # Compactor behavior instructions
+├── config.json          # Frequency configuration
 └── README.md            # This file
 ```
 
-### Frequency Settings
+### Question Types
 
-- **low**: Quiz after major implementations only
-- **medium**: Regular quizzes after significant changes (default)
-- **high**: Frequent quizzes, including smaller changes
+The compactor asks about:
+- Design decisions and tradeoffs
+- Edge cases and failure modes
+- System behavior under different conditions
+- Security implications
+- Extension points and flexibility
 
-## Tips for Success
+It avoids:
+- Trivial recall (function names, syntax)
+- Yes/no questions
+- Memorization tests
 
-1. Pay attention during implementations
+## Tips for Survival
+
+1. Pay attention while you're implementing
 2. Think about edge cases as you code
-3. Focus on understanding why, not just what
-4. Take time to formulate thoughtful responses
+3. Consider what could go wrong
+4. Understand the "why" behind your decisions
+5. Don't just make it work - know why it works
+
+The compactor will find you. Be ready.
 
 ## Contributing
 
-Found a bug or have suggestions? Open an issue or PR at:
+The walls are closing in on bugs too. Help us crush them:
 https://github.com/brittonhayes/claude-plugins
 
 ## License
@@ -139,3 +169,7 @@ MIT - See LICENSE file
 Britton Hayes
 - Email: britton@brittonhayes.com
 - GitHub: [@brittonhayes](https://github.com/brittonhayes)
+
+---
+
+*"What an incredible smell you've discovered." - Han Solo, moments before the trash compactor activated*

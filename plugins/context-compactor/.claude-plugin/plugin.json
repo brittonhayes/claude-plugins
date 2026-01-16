@@ -1,6 +1,6 @@
 {
   "name": "context-compactor",
-  "description": "A lightweight plugin that quizzes you on recently implemented code to ensure genuine understanding.",
+  "description": "A Star Wars-themed quiz plugin that threatens to crush your session like a trash compactor. Only your understanding of the code can stop the walls from closing in.",
   "version": "1.0.0",
   "author": {
     "name": "Britton Hayes",
@@ -15,12 +15,14 @@
     "understanding",
     "code-comprehension",
     "interactive",
+    "star-wars",
     "education"
   ],
   "category": "learning",
   "tags": [
     "education",
     "productivity",
-    "tools"
+    "tools",
+    "fun"
   ]
 }
