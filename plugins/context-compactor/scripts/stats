@@ -1,0 +1,36 @@
+#!/bin/bash
+# Show compactor statistics
+
+set -e
+
+DATA_FILE="context-compactor/data/session.json"
+
+if [ ! -f "$DATA_FILE" ]; then
+    echo "No quiz data yet. The compactor hasn't activated!"
+    exit 0
+fi
+
+# Extract stats using jq
+TOTAL=$(jq -r '.stats.total' "$DATA_FILE")
+SUCCESS=$(jq -r '.stats.success' "$DATA_FILE")
+PARTIAL=$(jq -r '.stats.partial' "$DATA_FILE")
+FAILURE=$(jq -r '.stats.failure' "$DATA_FILE")
+
+# Calculate success rate
+if [ "$TOTAL" -gt 0 ]; then
+    SUCCESS_RATE=$(echo "scale=1; ($SUCCESS * 100) / $TOTAL" | bc)
+else
+    SUCCESS_RATE=0
+fi
+
+echo "=== COMPACTOR STATS ==="
+echo "Total Quizzes: $TOTAL"
+echo "✅ Success: $SUCCESS"
+echo "⚠️  Partial: $PARTIAL"
+echo "❌ Failure: $FAILURE"
+echo "Success Rate: ${SUCCESS_RATE}%"
+echo ""
+
+# Show recent quizzes
+echo "Recent Quizzes:"
+jq -r '.quizzes[-5:] | reverse | .[] | "  \(.result | ascii_upcase): \(.topic)"' "$DATA_FILE"

@@ -1,0 +1,29 @@
+{
+  "name": "context-compactor",
+  "description": "A Star Wars-themed quiz plugin that threatens to crush your session like a trash compactor. Only your understanding of the code can stop the walls from closing in.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Britton Hayes",
+    "email": "britton@brittonhayes.com"
+  },
+  "homepage": "https://github.com/brittonhayes/claude-plugins",
+  "repository": "https://github.com/brittonhayes/claude-plugins",
+  "license": "MIT",
+  "keywords": [
+    "learning",
+    "quiz",
+    "understanding",
+    "code-comprehension",
+    "interactive",
+    "star-wars",
+    "gamification",
+    "education"
+  ],
+  "category": "learning",
+  "tags": [
+    "education",
+    "productivity",
+    "tools",
+    "fun"
+  ]
+}
