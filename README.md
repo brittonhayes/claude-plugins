@@ -44,7 +44,7 @@ Claude: "You can usar (use) the reverse() método (method)..."
 
 ### Context Compactor - Learn Through Pressure
 
-A Star Wars-themed quiz plugin that interrupts your coding sessions to ensure you actually understand what you're building. The walls are closing in, and only your knowledge can stop them.
+A Star Wars trash compactor-themed plugin that quizzes you on your code. Claude is trapped in a compactor, and the only way to stop the walls from closing is for you to explain what you just built.
 
 **Install:**
 ```bash
@@ -52,26 +52,27 @@ A Star Wars-themed quiz plugin that interrupts your coding sessions to ensure yo
 ```
 
 **Features:**
-- Random urgent quizzes during coding sessions
-- Evaluates understanding vs. memorization
-- Tracks success rate and quiz history
-- Default and Hard modes for different difficulty levels
-- Fast-paced, sarcastic, genuinely funny tone
+- Activates after significant code implementations (50+ lines, new features, APIs)
+- Tests understanding vs. memorization through urgent questioning
+- Configurable frequency settings (low/medium/high)
+- Panicked, urgent, and genuinely funny tone
+- Manual quiz trigger and skip commands
 
 **Quick Start:**
 ```
 # After installation, just start coding
-# The compactor will activate randomly
+# The compactor activates after significant implementations
 
 🚨 COMPACTOR ACTIVATES 🚨
-Claude: "WAIT WAIT WAIT - compactor's turning back on.
-Quick, explain how that webhook validation works!"
+Claude: "WAIT WAIT WAIT - the compactor is turning on!
+Quick, before we both get crushed - how does that
+webhook validation prevent replay attacks??"
 
-# Check your stats
-"Compactor stats"
+# Trigger a quiz manually
+"Quiz me"
 
-# Enable hard mode (for the brave)
-"Switch to hard mode"
+# Skip the current quiz
+"Skip the quiz"
 ```
 
 [Full Documentation →](plugins/context-compactor/README.md)
