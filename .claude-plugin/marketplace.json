@@ -1,0 +1,47 @@
+{
+  "name": "polyglot-language-learning",
+  "owner": {
+    "name": "Britton Hayes",
+    "email": "britton@brittonhayes.com"
+  },
+  "metadata": {
+    "description": "Language learning through natural code interaction",
+    "version": "1.0.0",
+    "pluginRoot": "."
+  },
+  "plugins": [
+    {
+      "name": "polyglot",
+      "source": "./polyglot",
+      "description": "Learn any language through natural code interaction using spaced repetition and progressive vocabulary injection. No flashcards, no drills—just coding.",
+      "version": "1.0.0",
+      "author": {
+        "name": "Britton Hayes",
+        "email": "britton@brittonhayes.com"
+      },
+      "homepage": "https://github.com/brittonhayes/claude-plugin-polyglot",
+      "repository": "https://github.com/brittonhayes/claude-plugin-polyglot",
+      "license": "MIT",
+      "keywords": [
+        "language-learning",
+        "spaced-repetition",
+        "education",
+        "polyglot",
+        "vocabulary",
+        "russian",
+        "spanish",
+        "german",
+        "french",
+        "japanese",
+        "immersion",
+        "progressive-learning"
+      ],
+      "category": "learning",
+      "tags": [
+        "education",
+        "productivity",
+        "tools"
+      ]
+    }
+  ]
+}

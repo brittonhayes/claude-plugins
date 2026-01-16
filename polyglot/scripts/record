@@ -1,0 +1,48 @@
+#!/bin/sh
+# Record vocabulary exposure - increments count and updates last_seen timestamp
+
+set -e
+
+if [ $# -lt 2 ]; then
+    echo "Usage: record <language> <term> [term2] [term3] ..." >&2
+    exit 1
+fi
+
+lang="$1"
+shift
+
+progress_dir="$HOME/.polyglot/progress"
+progress_file="$progress_dir/$lang.json"
+
+mkdir -p "$progress_dir"
+
+# Initialize if missing
+if [ ! -f "$progress_file" ]; then
+    echo '{}' > "$progress_file"
+fi
+
+# Process each term
+for term in "$@"; do
+    now=$(date +%s)
+
+    # Update or create term entry
+    jq --arg term "$term" --arg now "$now" '
+        .[$term] // {translation: "", count: 0, last_seen: 0, mastery: 0} |
+        .count += 1 |
+        .last_seen = ($now | tonumber) |
+        .mastery = (
+            if .count >= 20 then 5
+            elif .count >= 10 then 4
+            elif .count >= 5 then 3
+            elif .count >= 2 then 2
+            else 1
+            end
+        ) |
+        {($term): .}
+    ' "$progress_file" | jq -s 'reduce .[] as $item ({}; . * $item)' > "$progress_file.tmp"
+
+    # Merge with existing data
+    jq -s '.[0] * .[1]' "$progress_file" "$progress_file.tmp" > "$progress_file.new"
+    mv "$progress_file.new" "$progress_file"
+    rm "$progress_file.tmp"
+done

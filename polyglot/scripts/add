@@ -1,0 +1,35 @@
+#!/bin/sh
+# Add a new vocabulary term
+
+set -e
+
+if [ $# -ne 3 ]; then
+    echo "Usage: add <language> <term> <translation>" >&2
+    exit 1
+fi
+
+lang="$1"
+term="$2"
+translation="$3"
+
+progress_dir="$HOME/.polyglot/progress"
+progress_file="$progress_dir/$lang.json"
+
+mkdir -p "$progress_dir"
+
+if [ ! -f "$progress_file" ]; then
+    echo '{}' > "$progress_file"
+fi
+
+# Add or update term
+jq --arg term "$term" --arg trans "$translation" '
+    .[$term] = {
+        translation: $trans,
+        count: 0,
+        last_seen: 0,
+        mastery: 0
+    }
+' "$progress_file" > "$progress_file.tmp"
+
+mv "$progress_file.tmp" "$progress_file"
+echo "Added: $term = $translation"

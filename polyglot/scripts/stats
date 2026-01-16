@@ -1,0 +1,38 @@
+#!/bin/sh
+# Show vocabulary learning statistics
+
+set -e
+
+if [ $# -ne 1 ]; then
+    echo "Usage: stats <language>" >&2
+    exit 1
+fi
+
+lang="$1"
+progress_file="$HOME/.polyglot/progress/$lang.json"
+
+if [ ! -f "$progress_file" ]; then
+    echo "No progress found for language: $lang" >&2
+    exit 1
+fi
+
+jq -r '
+    . as $data |
+    ($data | to_entries | length) as $total |
+    ($data | to_entries | map(select(.value.mastery >= 5)) | length) as $mastered |
+    ($data | to_entries | map(select(.value.mastery >= 3)) | length) as $familiar |
+    ($data | to_entries | map(select(.value.count > 0)) | length) as $seen |
+    ($data | to_entries | map(.value.count) | add // 0) as $exposures |
+
+    "Language: \($data | keys[0] // "unknown" | split("") | .[0:2] | join(""))",
+    "Total vocabulary: \($total)",
+    "Seen at least once: \($seen)",
+    "Familiar (mastery ≥3): \($familiar)",
+    "Mastered (mastery 5): \($mastered)",
+    "Total exposures: \($exposures)",
+    "",
+    "Top 10 most reviewed:",
+    ($data | to_entries | sort_by(-.value.count) | .[:10] |
+     map("  \(.key): \(.value.count)x (mastery: \(.value.mastery))") | .[]
+    )
+' "$progress_file"
