@@ -1,0 +1,27 @@
+#!/bin/sh
+# Initialize polyglot config in user's XDG config directory
+
+set -e
+
+config_dir="${XDG_CONFIG_HOME:-$HOME/.config}/polyglot"
+config_file="$config_dir/config.json"
+script_dir="$(dirname "$0")"
+default_config="$script_dir/../../../config.default.json"
+
+mkdir -p "$config_dir"
+
+# Only create config if it doesn't exist
+if [ ! -f "$config_file" ]; then
+    if [ -f "$default_config" ]; then
+        cp "$default_config" "$config_file"
+        echo "Created config at $config_file"
+    else
+        echo '{"language": "ru", "difficulty": 5}' > "$config_file"
+        echo "Created default config at $config_file"
+    fi
+else
+    echo "Config already exists at $config_file"
+fi
+
+# Also ensure progress directory exists
+mkdir -p "$config_dir/progress"

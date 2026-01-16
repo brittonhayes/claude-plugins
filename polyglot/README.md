@@ -37,9 +37,12 @@ cd claude-plugins
 After installation, configure your target language and difficulty level:
 
 ```bash
-# Set your target language and difficulty (1-10)
-# The config file is in your plugin cache directory
-echo '{"language": "ru", "difficulty": 3}' > config.json
+# Initialize config (creates ~/.config/polyglot/config.json)
+polyglot/skills/polyglot/scripts/init
+
+# Or manually set your target language and difficulty (1-10)
+mkdir -p "${XDG_CONFIG_HOME:-$HOME/.config}/polyglot"
+echo '{"language": "ru", "difficulty": 3}' > "${XDG_CONFIG_HOME:-$HOME/.config}/polyglot/config.json"
 ```
 
 Or simply tell Claude during a session:
@@ -89,7 +92,7 @@ That's it. As you code, you learn. The system tracks every word and surfaces the
 
 ### Change Language
 
-Edit `polyglot/config.json` or tell Claude:
+Edit `~/.config/polyglot/config.json` or tell Claude:
 
 ```
 "Switch to Spanish"
@@ -104,8 +107,7 @@ Set difficulty from 1 (beginner) to 10 (advanced):
 
 ```bash
 # Via config
-cd polyglot
-echo '{"language": "ru", "difficulty": 7}' > config.json
+echo '{"language": "ru", "difficulty": 7}' > "${XDG_CONFIG_HOME:-$HOME/.config}/polyglot/config.json"
 
 # Or tell Claude
 "Make it easier"
@@ -158,12 +160,24 @@ Top 10 most reviewed:
 To start fresh with a language:
 
 ```bash
-rm ~/.polyglot/progress/ru.json
+rm "${XDG_CONFIG_HOME:-$HOME/.config}/polyglot/progress/ru.json"
 ```
 
 Next session will reload from seed vocabulary.
 
 ## How It Works
+
+### Always-On Hooks Architecture
+
+The plugin uses Claude Code hooks for truly automatic vocabulary injection:
+
+1. **SessionStart hook** (`hooks/session-start.sh`): Initializes your config and exports environment variables (`POLYGLOT_LANGUAGE`, `POLYGLOT_DIFFICULTY`, `POLYGLOT_DUE_TERMS`) for the session.
+
+2. **UserPromptSubmit hook** (`hooks/hooks.json`): A prompt-based hook that instructs Claude to naturally weave vocabulary into every response based on your difficulty level.
+
+3. **Stop hook** (`hooks/record-exposure.sh`): Records vocabulary exposure at the end of each conversation turn for spaced repetition tracking.
+
+This means vocabulary injection happens automatically - you don't need to invoke any commands. The `/polyglot` skill is available for manual control (change language, adjust difficulty, view stats) but isn't required for basic operation.
 
 ### Spaced Repetition
 
@@ -239,7 +253,7 @@ Increment exposure count for vocabulary terms.
 
 **Input**: Language code and one or more terms
 
-**Output**: Silent on success (updates `~/.polyglot/progress/<lang>.json`)
+**Output**: Silent on success (updates `~/.config/polyglot/progress/<lang>.json`)
 
 **Example**:
 ```bash
@@ -387,8 +401,8 @@ Seed vocabulary included for:
 - Install jq: `brew install jq` (macOS) or `apt install jq` (Linux)
 
 **Progress not persisting**
-- Check `~/.polyglot/progress/` directory exists and is writable
-- Verify JSON files are valid: `jq empty ~/.polyglot/progress/ru.json`
+- Check `~/.config/polyglot/progress/` directory exists and is writable
+- Verify JSON files are valid: `jq empty ~/.config/polyglot/progress/ru.json`
 
 **Terms not appearing in responses**
 - Increase difficulty level (low levels inject fewer terms)
@@ -400,21 +414,39 @@ Seed vocabulary included for:
 ```
 polyglot/
 ├── .claude-plugin/
-│   └── plugin.json       # Plugin manifest
-├── SKILL.md              # Skill instructions for Claude
-├── config.json           # User configuration (language, difficulty)
-├── data/                 # Seed vocabulary files
+│   └── plugin.json           # Plugin manifest
+├── hooks/                    # Always-on automation
+│   ├── hooks.json            # Hook definitions (SessionStart, UserPromptSubmit, Stop)
+│   ├── session-start.sh      # Initialize config and export env vars
+│   └── record-exposure.sh    # Record vocabulary at end of turns
+├── agents/
+│   └── translate/
+│       └── AGENT.md          # Background translation agent
+├── skills/
+│   └── polyglot/
+│       ├── SKILL.md          # Manual control skill (change lang, view stats)
+│       └── scripts/          # Unix-style utility scripts
+│           ├── init          # Initialize user config
+│           ├── get_due       # Fetch terms due for review
+│           ├── record        # Record vocabulary exposure
+│           ├── add           # Add new vocabulary
+│           └── stats         # Show progress statistics
+├── data/                     # Seed vocabulary files
 │   ├── ru.json
 │   ├── es.json
 │   ├── de.json
 │   ├── fr.json
 │   └── ja.json
-├── scripts/              # Unix-style utility scripts
-│   ├── get_due           # Fetch terms due for review
-│   ├── record            # Record vocabulary exposure
-│   ├── add               # Add new vocabulary
-│   └── stats             # Show progress statistics
-└── README.md             # This file
+├── config.default.json       # Default configuration template
+└── README.md                 # This file
+
+# User data (persists across plugin updates):
+~/.config/polyglot/
+├── config.json               # User configuration (language, difficulty)
+└── progress/                 # Learning progress per language
+    ├── ru.json
+    ├── es.json
+    └── ...
 ```
 
 This plugin is part of the [claude-plugins](https://github.com/brittonhayes/claude-plugins) marketplace.

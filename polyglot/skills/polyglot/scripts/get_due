@@ -10,8 +10,9 @@ fi
 
 lang="$1"
 script_dir="$(dirname "$0")"
-seed_file="$script_dir/../data/$lang.json"
-progress_dir="$HOME/.polyglot/progress"
+seed_file="$script_dir/../../../data/$lang.json"
+config_dir="${XDG_CONFIG_HOME:-$HOME/.config}/polyglot"
+progress_dir="$config_dir/progress"
 progress_file="$progress_dir/$lang.json"
 now=$(date +%s)
 

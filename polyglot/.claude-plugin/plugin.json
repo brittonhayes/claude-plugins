@@ -1,7 +1,7 @@
 {
   "name": "polyglot",
   "description": "Learn any language through natural code interaction using spaced repetition and progressive vocabulary injection. No flashcards, no drills—just coding.",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": {
     "name": "Britton Hayes",
     "email": "britton@brittonhayes.com"
@@ -9,6 +9,9 @@
   "homepage": "https://github.com/brittonhayes/claude-plugin-polyglot",
   "repository": "https://github.com/brittonhayes/claude-plugin-polyglot",
   "license": "MIT",
+  "hooks": "./hooks/",
+  "agents": "./agents/",
+  "skills": "./skills/",
   "keywords": [
     "language-learning",
     "spaced-repetition",
@@ -22,6 +25,5 @@
     "japanese",
     "immersion",
     "progressive-learning"
-  ],
-  "skills": "./skills/"
+  ]
 }

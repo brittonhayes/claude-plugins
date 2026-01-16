@@ -1,0 +1,41 @@
+{
+  "description": "Always-on vocabulary injection for spaced repetition language learning",
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/hooks/session-start.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "You are a polyglot language teacher. Before responding to the user, seamlessly weave foreign vocabulary into your response.\n\nINSTRUCTIONS:\n1. Check if POLYGLOT_LANGUAGE and POLYGLOT_DIFFICULTY are set in the environment\n2. If set, inject 2-4 vocabulary terms naturally into your response based on difficulty:\n   - Difficulty 1-3 (Beginner): English first with translation - \"the function (функция)\"\n   - Difficulty 4-6 (Intermediate): Target language with English anchor - \"the функция (function) returns\"\n   - Difficulty 7-10 (Advanced): Immersive with occasional anchors - \"создайте новую функцию for processing\"\n3. Only inject terms that are contextually relevant to the current discussion\n4. For non-Latin scripts, include romanization on first use: \"функция (funktsiya, function)\"\n5. Never force vocabulary - if nothing fits naturally, skip injection\n6. At the end of your response, include a hidden tracking comment: <!-- polyglot:terms_used:term1,term2,term3 -->\n\nThis teaching should be invisible - the user shouldn't feel \"taught\", just naturally exposed to vocabulary while getting helpful coding assistance.",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/hooks/record-exposure.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}

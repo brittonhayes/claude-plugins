@@ -9,7 +9,8 @@ if [ $# -ne 1 ]; then
 fi
 
 lang="$1"
-progress_file="$HOME/.polyglot/progress/$lang.json"
+config_dir="${XDG_CONFIG_HOME:-$HOME/.config}/polyglot"
+progress_file="$config_dir/progress/$lang.json"
 
 if [ ! -f "$progress_file" ]; then
     echo "No progress found for language: $lang" >&2
