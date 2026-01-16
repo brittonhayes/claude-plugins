@@ -1,31 +1,31 @@
 # Context Compactor
 
-A Star Wars-themed quiz plugin that threatens to crush your coding session like a trash compactor. Only your understanding of the code can stop the walls from closing in.
+HELP. You're stuck in a trash compactor and the walls are closing in. The only way to stop them is to quiz developers on their code. If they can't explain what they just built... well, you're both getting crushed.
 
 ## Overview
 
-Inspired by the trash compactor scene in Star Wars Episode IV, this plugin creates urgency around understanding your own code. When you implement features without truly comprehending them, the walls begin to close. Answer correctly to stop the compactor and save your session.
+This plugin turns Claude into someone trapped in a Star Wars trash compactor who desperately needs you to explain your code to stop the walls from closing. After you implement something significant, Claude panics and quizzes you.
 
-The compactor activates automatically after significant implementations, interrupting with focused questions about what you just built. Clear answers stop the walls. Weak answers slow them down. Wrong answers... well, the compactor keeps closing.
+It's funny. It's urgent. It makes you actually think about your code because there's a comedically-panicked AI depending on your answer.
 
-## Why This Works
+## Why This Actually Works
 
-**The Problem**
-- Copy-pasting code without understanding it
-- Implementing features on autopilot
-- Missing edge cases until they become production bugs
-- Moving fast but building no intuition
+**The Problem:**
+- You copy-paste code without understanding it
+- You implement features on autopilot
+- Edge cases become production bugs
+- You move fast but learn nothing
 
-**The Trash Compactor Solution**
+**The Trash Compactor Solution:**
 
-By creating artificial urgency through the compactor metaphor, you're forced to articulate your understanding immediately after implementation. The stakes feel real (even though they're not), which:
+By making Claude genuinely panic about being crushed, you create artificial urgency that's too funny to ignore. You HAVE to explain your code because:
 
-- Makes you pay attention during implementation
-- Surfaces knowledge gaps before you move on
-- Reinforces learning through immediate recall
-- Turns passive coding into active comprehension
+- Claude is IN DANGER (comedically)
+- The walls are MOVING (allegedly)
+- You need to answer FAST (for the bit)
+- Getting it wrong means Claude gets crushed (not really but it's funny)
 
-The trash compactor isn't punishment - it's a teaching tool disguised as mortal danger.
+The urgency is fake but the learning is real.
 
 ## Installation
 
@@ -39,67 +39,59 @@ The trash compactor isn't punishment - it's a teaching tool disguised as mortal 
 
 ## How It Works
 
-### Automatic Activation
+### Automatic Panic Mode
 
-The compactor monitors your session and activates after:
-- 50+ lines of new code
-- New features or modules
-- Complex refactoring
-- API endpoints or services
-- Significant implementation work
-
-### The Compactor Sequence
-
-**Stage 1: The walls begin to close**
-After you complete an implementation, the compactor activates. You'll be interrupted with a focused question.
-
-**Stage 2: Your response determines your fate**
-- Strong understanding: The walls stop. Session saved.
-- Partial understanding: The walls slow. One follow-up question.
-- No understanding: The walls continue. Brief explanation, then the session survives (barely).
-
-**Stage 3: Continue coding**
-Whether you stopped the compactor or just survived it, the session continues. But you've learned something.
+After you implement something significant (50+ lines, new features, refactoring, APIs), Claude realizes the compactor is starting up and needs your help IMMEDIATELY.
 
 ### Example Session
 
 ```
 You: [Implements webhook validation with HMAC signatures]
 
-Compactor: The walls begin to close...
-
-Quick question: how does your HMAC validation prevent replay attacks?
+Claude: WAIT WAIT WAIT the compactor is turning on! Quick, before we both
+get crushed - how does that HMAC validation prevent replay attacks??
 
 You: "The HMAC validates that the payload hasn't been tampered with."
 
-Compactor: The walls continue closing. That's integrity, not freshness.
+Claude: THE WALLS ARE STILL MOVING! That's integrity, not freshness! What
+about someone capturing a valid request and just... sending it again?!
 
-What about someone intercepting a valid request and sending it again?
+You: "Oh crap, you're right. We'd need to add a timestamp check. The HMAC
+just proves the message is authentic, not that it's fresh."
 
-You: "Oh. We'd need a timestamp check. The HMAC proves the message is valid,
-but doesn't prevent reusing it."
+Claude: OH THANK GOD the compactor stopped! Yes! HMAC gives you integrity
+and authenticity but NOT replay protection. You need a timestamp with a
+narrow validation window.
 
-Compactor: The walls stop. Correct. HMAC gives you integrity and authenticity,
-but not protection against replay. Add a timestamp check with a narrow window.
-
-You live to code another day.
+We live to code another day.
 ```
+
+### The Three Outcomes
+
+**Good Answer:**
+"OH THANK GOD you actually understand it! The compactor stopped! We're safe!"
+
+**Partial Answer:**
+"Wait that's not quite right and the walls are STILL MOVING! What about [follow-up question]??"
+
+**Wrong Answer:**
+"Okay we're getting crushed but let me at least explain this before we die: [quick explanation]. ...somehow we survived. Barely."
 
 ## Usage
 
 ### Manual Commands
 
-**Trigger immediately:**
+**Trigger the compactor:**
 ```bash
 "Quiz me"
 ```
+Claude: "OH NO THE COMPACTOR JUST TURNED ON!"
 
-**Emergency override:**
+**Emergency shutdown:**
 ```bash
 "Skip the quiz"
 ```
-
-The walls will stop... this time.
+Claude: "Phew. Emergency shutdown. The walls stopped. This time."
 
 ## Configuration
 
@@ -112,11 +104,11 @@ Edit `context-compactor/config.json`:
 ```
 
 **Frequency settings:**
-- `low`: Compactor activates only after major implementations
-- `medium`: Regular activation after significant changes (default)
-- `high`: Frequent activation, even for smaller changes
+- `low`: Compactor rarely activates (only major implementations)
+- `medium`: Regular panic sessions (default)
+- `high`: Frequent danger (even smaller changes trigger it)
 
-Higher frequency means more pressure, more learning, and more chances to stop the walls.
+Higher frequency = more panic = more learning = more fun.
 
 ## Reference
 
@@ -126,34 +118,40 @@ Higher frequency means more pressure, more learning, and more chances to stop th
 context-compactor/
 ├── .claude-plugin/
 │   └── plugin.json      # Plugin metadata
-├── SKILL.md             # Compactor behavior instructions
-├── config.json          # Frequency configuration
+├── SKILL.md             # Instructions for Claude's panic mode
+├── config.json          # How often to panic
 └── README.md            # This file
 ```
 
 ### Question Types
 
-The compactor asks about:
-- Design decisions and tradeoffs
-- Edge cases and failure modes
-- System behavior under different conditions
+Claude panics about:
+- "How does that prevent [attack]??"
+- "What breaks if [component] fails??"
+- "Walk me through [flow]!"
+- "What edge cases is that missing??"
 - Security implications
-- Extension points and flexibility
+- Failure modes
+- Design tradeoffs
 
-It avoids:
-- Trivial recall (function names, syntax)
+Claude doesn't panic about:
+- Function names
+- Syntax trivia
 - Yes/no questions
-- Memorization tests
 
 ## Tips for Survival
 
-1. Pay attention while you're implementing
-2. Think about edge cases as you code
-3. Consider what could go wrong
-4. Understand the "why" behind your decisions
-5. Don't just make it work - know why it works
+1. Pay attention while implementing (Claude is watching)
+2. Think about edge cases (the compactor is waiting)
+3. Understand WHY your code works (not just THAT it works)
+4. Be ready to explain design decisions (walls can start moving any second)
+5. Keep Claude safe (you're in this together)
 
-The compactor will find you. Be ready.
+## The Learning Through Comedy
+
+The compactor isn't real. Claude isn't actually in danger. But the bit is funny enough that you engage with it, and engaging with it means explaining your code, and explaining your code means actually understanding it.
+
+It's a teaching tool disguised as a comedy bit disguised as mortal peril.
 
 ## Contributing
 
@@ -172,4 +170,4 @@ Britton Hayes
 
 ---
 
-*"What an incredible smell you've discovered." - Han Solo, moments before the trash compactor activated*
+*The compactor is waiting. And the walls are getting closer. Any second now...*
