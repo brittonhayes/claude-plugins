@@ -42,6 +42,42 @@ Claude: "You can usar (use) the reverse() método (method)..."
 
 ---
 
+### Context Compactor - Learn Through Pressure
+
+A Star Wars-themed quiz plugin that interrupts your coding sessions to ensure you actually understand what you're building. The walls are closing in, and only your knowledge can stop them.
+
+**Install:**
+```bash
+/plugin install context-compactor@claude-plugins
+```
+
+**Features:**
+- Random urgent quizzes during coding sessions
+- Evaluates understanding vs. memorization
+- Tracks success rate and quiz history
+- Default and Hard modes for different difficulty levels
+- Fast-paced, sarcastic, genuinely funny tone
+
+**Quick Start:**
+```
+# After installation, just start coding
+# The compactor will activate randomly
+
+🚨 COMPACTOR ACTIVATES 🚨
+Claude: "WAIT WAIT WAIT - compactor's turning back on.
+Quick, explain how that webhook validation works!"
+
+# Check your stats
+"Compactor stats"
+
+# Enable hard mode (for the brave)
+"Switch to hard mode"
+```
+
+[Full Documentation →](plugins/context-compactor/README.md)
+
+---
+
 ## Plugin Management
 
 ```bash
@@ -67,7 +103,15 @@ claude-plugins/
 ├── .claude-plugin/
 │   └── marketplace.json      # Marketplace manifest
 ├── plugins/
-│   └── polyglot/             # Polyglot plugin
+│   ├── polyglot/             # Polyglot plugin
+│   │   ├── .claude-plugin/
+│   │   │   └── plugin.json
+│   │   ├── SKILL.md
+│   │   ├── config.json
+│   │   ├── data/
+│   │   ├── scripts/
+│   │   └── README.md
+│   └── context-compactor/    # Context Compactor plugin
 │       ├── .claude-plugin/
 │       │   └── plugin.json
 │       ├── SKILL.md

@@ -1,0 +1,15 @@
+#!/bin/bash
+# Reset compactor session data
+
+set -e
+
+DATA_FILE="context-compactor/data/session.json"
+
+if [ -f "$DATA_FILE" ]; then
+    rm "$DATA_FILE"
+    echo "Compactor reset complete. Session data cleared."
+else
+    echo "No session data to reset."
+fi
+
+echo "The compactor awaits its next victim..."
