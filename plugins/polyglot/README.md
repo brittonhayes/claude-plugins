@@ -13,7 +13,7 @@ In Claude Code, add the marketplace and install the plugin:
 /plugin marketplace add brittonhayes/claude-plugins
 
 # Install the polyglot plugin
-/plugin install polyglot@brittonhayes-plugins
+/plugin install polyglot@brittonhayes-claude-plugins
 ```
 
 ### From Local Development
@@ -29,7 +29,7 @@ cd claude-plugins
 /plugin marketplace add .
 
 # Install the plugin
-/plugin install polyglot@brittonhayes-plugins
+/plugin install polyglot@brittonhayes-claude-plugins
 ```
 
 ### Initial Configuration
@@ -57,10 +57,10 @@ Or simply tell Claude during a session:
 /plugin list
 
 # Uninstall the plugin
-/plugin uninstall polyglot@brittonhayes-plugins
+/plugin uninstall polyglot@brittonhayes-claude-plugins
 
 # Remove the marketplace
-/plugin marketplace remove brittonhayes-plugins
+/plugin marketplace remove brittonhayes-claude-plugins
 ```
 
 ## Quick Start

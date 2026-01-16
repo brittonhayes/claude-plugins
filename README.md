@@ -18,7 +18,7 @@ Learn any language naturally through coding sessions using spaced repetition and
 
 **Install:**
 ```bash
-/plugin install polyglot@brittonhayes-plugins
+/plugin install polyglot@brittonhayes-claude-plugins
 ```
 
 **Features:**
@@ -48,7 +48,7 @@ A Star Wars trash compactor-themed plugin that quizzes you on your code. Claude 
 
 **Install:**
 ```bash
-/plugin install context-compactor@brittonhayes-plugins
+/plugin install context-compactor@brittonhayes-claude-plugins
 ```
 
 **Features:**
@@ -89,10 +89,10 @@ webhook validation prevent replay attacks??"
 /plugin list
 
 # Uninstall a plugin
-/plugin uninstall polyglot@brittonhayes-plugins
+/plugin uninstall polyglot@brittonhayes-claude-plugins
 
 # Remove this marketplace
-/plugin marketplace remove brittonhayes-plugins
+/plugin marketplace remove brittonhayes-claude-plugins
 ```
 
 ## For Developers
@@ -134,7 +134,7 @@ cd claude-plugins
 /plugin marketplace add .
 
 # Install a plugin
-/plugin install polyglot@brittonhayes-plugins
+/plugin install polyglot@brittonhayes-claude-plugins
 ```
 
 ### Contributing
