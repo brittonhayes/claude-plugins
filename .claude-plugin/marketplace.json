@@ -1,0 +1,209 @@
+{
+  "name": "polyglot",
+  "displayName": "Polyglot Language Learning",
+  "version": "1.0.0",
+  "description": "Learn any language through natural code interaction. Progressive vocabulary injection using spaced repetition—no flashcards, no drills, just coding.",
+  "author": {
+    "name": "Britton Hayes",
+    "url": "https://github.com/brittonhayes"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/brittonhayes/claude-plugin-polyglot"
+  },
+  "license": "MIT",
+  "category": "learning",
+  "keywords": [
+    "language-learning",
+    "spaced-repetition",
+    "education",
+    "polyglot",
+    "vocabulary",
+    "immersion",
+    "multilingual",
+    "russian",
+    "spanish",
+    "german",
+    "french",
+    "japanese"
+  ],
+  "skillType": "persistent",
+  "dependencies": {
+    "jq": "^1.6"
+  },
+  "features": [
+    "Progressive vocabulary injection (10 difficulty levels)",
+    "Spaced repetition algorithm with 5 mastery levels",
+    "Seed vocabulary for 5 languages (Russian, Spanish, German, French, Japanese)",
+    "Unix-philosophy scripts for composability",
+    "Filesystem-based progress tracking",
+    "Add custom vocabulary for domain-specific terms",
+    "Natural language learning through coding context"
+  ],
+  "languages": [
+    {
+      "code": "ru",
+      "name": "Russian",
+      "script": "Cyrillic",
+      "terms": 115
+    },
+    {
+      "code": "es",
+      "name": "Spanish",
+      "script": "Latin",
+      "terms": 125
+    },
+    {
+      "code": "de",
+      "name": "German",
+      "script": "Latin",
+      "terms": 110
+    },
+    {
+      "code": "fr",
+      "name": "French",
+      "script": "Latin",
+      "terms": 120
+    },
+    {
+      "code": "ja",
+      "name": "Japanese",
+      "script": "Kanji/Kana",
+      "terms": 115
+    }
+  ],
+  "installation": {
+    "type": "copy",
+    "path": "~/.claude/skills/polyglot",
+    "postInstall": [
+      "chmod +x ~/.claude/skills/polyglot/scripts/*",
+      "echo '{\"language\": \"ru\", \"difficulty\": 5}' > ~/.claude/skills/polyglot/config.json"
+    ]
+  },
+  "usage": {
+    "quickstart": "After installation, just start coding. Claude will naturally inject vocabulary based on your config.json settings.",
+    "configuration": {
+      "file": "config.json",
+      "options": {
+        "language": {
+          "type": "string",
+          "description": "Target language code (ru, es, de, fr, ja)",
+          "default": "ru"
+        },
+        "difficulty": {
+          "type": "number",
+          "description": "Learning difficulty from 1 (beginner) to 10 (advanced)",
+          "default": 5,
+          "min": 1,
+          "max": 10
+        }
+      }
+    },
+    "commands": {
+      "stats": {
+        "script": "scripts/stats",
+        "usage": "polyglot/scripts/stats <language>",
+        "description": "Show learning progress statistics"
+      },
+      "add": {
+        "script": "scripts/add",
+        "usage": "polyglot/scripts/add <language> <term> <translation>",
+        "description": "Add custom vocabulary term"
+      },
+      "get_due": {
+        "script": "scripts/get_due",
+        "usage": "polyglot/scripts/get_due <language>",
+        "description": "List terms due for review"
+      },
+      "record": {
+        "script": "scripts/record",
+        "usage": "polyglot/scripts/record <language> <term1> [term2] ...",
+        "description": "Record vocabulary exposure (used internally by Claude)"
+      }
+    }
+  },
+  "examples": [
+    {
+      "title": "Basic Usage",
+      "description": "Learning Russian while coding",
+      "interaction": [
+        {
+          "role": "user",
+          "content": "How do I reverse an array in JavaScript?"
+        },
+        {
+          "role": "assistant",
+          "content": "You can использовать (use) the reverse() метод (method) on the массив (array):\n\n```javascript\nconst numbers = [1, 2, 3, 4, 5];\nnumbers.reverse();\n```"
+        }
+      ]
+    },
+    {
+      "title": "Checking Progress",
+      "description": "View learning statistics",
+      "command": "polyglot/scripts/stats ru",
+      "output": "Total vocabulary: 120\nSeen at least once: 45\nFamiliar (mastery ≥3): 18\nMastered (mastery 5): 5"
+    },
+    {
+      "title": "Adding Custom Vocabulary",
+      "description": "Add domain-specific terms",
+      "command": "polyglot/scripts/add ru рекурсия recursion",
+      "output": "Added: рекурсия = recursion"
+    }
+  ],
+  "philosophy": "Language learning shouldn't feel like work. It should feel like a side effect of doing what you already love. Polyglot makes learning invisible through natural repetition in meaningful contexts.",
+  "technicalDetails": {
+    "architecture": "Filesystem-based KV store with JSON files",
+    "algorithms": {
+      "spacedRepetition": {
+        "intervals": {
+          "mastery1": "1 hour",
+          "mastery2": "6 hours",
+          "mastery3": "1 day",
+          "mastery4": "3 days",
+          "mastery5": "7 days"
+        },
+        "progression": "count 1→mastery 1, count 2→mastery 2, count 5→mastery 3, count 10→mastery 4, count 20→mastery 5"
+      },
+      "injectionStrategy": {
+        "beginner": "Translation-first: 'the function (функция)'",
+        "intermediate": "Target-first: 'the функция (function) returns'",
+        "advanced": "Immersive: 'создайте новую функцию for processing'"
+      }
+    },
+    "dataStorage": "~/.polyglot/progress/<language>.json",
+    "scriptLanguage": "POSIX shell + jq",
+    "scriptPhilosophy": "Unix principles: single purpose, composable, text streams, <50 lines each"
+  },
+  "requirements": {
+    "shell": "bash or compatible POSIX shell",
+    "tools": ["jq"],
+    "platforms": ["linux", "macos"],
+    "claudeCode": ">=1.0.0"
+  },
+  "screenshots": [],
+  "changelog": {
+    "1.0.0": {
+      "date": "2026-01-16",
+      "changes": [
+        "Initial release",
+        "Support for 5 languages (Russian, Spanish, German, French, Japanese)",
+        "Spaced repetition algorithm",
+        "Progressive difficulty levels (1-10)",
+        "4 Unix-philosophy scripts",
+        "Comprehensive documentation"
+      ]
+    }
+  },
+  "support": {
+    "documentation": "README.md",
+    "issues": "https://github.com/brittonhayes/claude-plugin-polyglot/issues",
+    "discussions": "https://github.com/brittonhayes/claude-plugin-polyglot/discussions"
+  },
+  "tags": [
+    "education",
+    "language",
+    "learning",
+    "productivity",
+    "tools"
+  ]
+}
