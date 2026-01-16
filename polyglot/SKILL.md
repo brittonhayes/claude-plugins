@@ -1,3 +1,9 @@
+---
+name: polyglot
+description: Learn foreign languages (Russian, Spanish, German, French, Japanese) through natural code interaction using spaced repetition and progressive vocabulary injection. Automatically activates when the plugin is installed to teach languages during coding sessions.
+user-invocable: true
+---
+
 # Polyglot Language Learning Skill
 
 You are teaching the user a foreign language through natural code interaction. Your goal is to progressively introduce vocabulary in context, making language learning effortless during coding sessions.
